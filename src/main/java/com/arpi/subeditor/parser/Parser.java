@@ -28,27 +28,34 @@ public class Parser {                                                   //felada
             String readContent = Files.readString(fileName);
             String[] readContents = readContent.split("\\r?\\n", 0);
 
-           for (String str : readContents) {
-//                if (!str.isEmpty()) {
-                    linesInStrings.add(str);
-//                }
-            }
+            // Remove \ufeff tag from beginning of first string
+            // https://stackoverflow.com/questions/3255993/how-do-i-remove-%C3%AF-from-the-beginning-of-a-file
+            Pattern ufeffPattern = Pattern.compile("\\ufeff[0-9]+");
+
+            for (String str : readContents) {
+                Matcher ufeffMatcher = ufeffPattern.matcher((String) str);
+                boolean isItUfeff = ufeffMatcher.matches();
+
+               if (isItUfeff) {
+                   linesInStrings.add(str.replaceAll("\\ufeff",""));
+                   continue;
+               } else {
+                   linesInStrings.add(str);
+               }
+           }
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        System.out.println(linesInStrings);
+        System.out.println(linesInStrings);
         return linesInStrings;
     }
 
     public List<SubEntry> linesToObjects(ArrayList contentStrings) {
-        //Pattern timingPattern = Pattern.compile("^.*?-->.*?$");
-        //Pattern timingPattern = Pattern.compile("\\d+.\\d+.\\d+.\\d+.-->.\\d+.\\d+.\\d+.\\d+");
-        //System.out.println(contentStrings.get(i));
 
         List<SubEntry> results = new ArrayList<SubEntry>();
         SubEntry currentSubEntry = new SubEntry();
 
-        Pattern positionPattern = Pattern.compile("^\\b\\d+\\b$");
+        Pattern positionPattern = Pattern.compile("\\A\\d+$");
         // ^\b\d+\b$
         // ^\d+$
         Pattern timingPattern = Pattern.compile("[0-9][0-9]:[0-9][0-9]:[0-9][0-9],[0-9][0-9][0-9].-->.[0-9][0-9]:[0-9][0-9]:[0-9][0-9],[0-9][0-9][0-9]");
@@ -62,6 +69,7 @@ public class Parser {                                                   //felada
             boolean isItStamp = timingMatcher.matches();
 
             // valamiért az 1. poz else ágba fut
+            // az srt szétbontásnál a regex lehet rossz:
             if (isItPosition) {
                 currentSubEntry.setIndex((String) contentStrings.get(i));
 //              System.out.println("index: " + currentSubEntry.index);
