@@ -51,9 +51,8 @@ public class Parser {                                                   //felada
     }
 
     public List<SubEntry> linesToObjects(ArrayList contentStrings) {
-
-        List<SubEntry> results = new ArrayList<SubEntry>();
         SubEntry currentSubEntry = new SubEntry();
+        List<SubEntry> results = new ArrayList<SubEntry>();
 
         Pattern positionPattern = Pattern.compile("\\A\\d+$");
         // ^\b\d+\b$
@@ -61,37 +60,30 @@ public class Parser {                                                   //felada
         Pattern timingPattern = Pattern.compile("[0-9][0-9]:[0-9][0-9]:[0-9][0-9],[0-9][0-9][0-9].-->.[0-9][0-9]:[0-9][0-9]:[0-9][0-9],[0-9][0-9][0-9]");
 
         for (int i = 0; i < contentStrings.size(); i++) {
-            System.out.println("i: " + i + " --- " + contentStrings.get(i));
             Matcher timingMatcher = timingPattern.matcher((String) contentStrings.get(i));
             Matcher positionMatcher = positionPattern.matcher((String) contentStrings.get(i));
 
             boolean isItPosition = positionMatcher.matches();
             boolean isItStamp = timingMatcher.matches();
 
-            // valamiért az 1. poz else ágba fut
-            // az srt szétbontásnál a regex lehet rossz:
-            if (isItPosition) {
-                currentSubEntry.setIndex((String) contentStrings.get(i));
-//              System.out.println("index: " + currentSubEntry.index);
+            if (currentSubEntry.index == null || currentSubEntry.timing == null || currentSubEntry.text == "") {
+                if (isItPosition) {
+                    currentSubEntry.setIndex((String) contentStrings.get(i));
+                } else if (isItStamp) {
+                    currentSubEntry.setTiming((String) contentStrings.get(i));
+                } else if (!isItPosition && !isItStamp && !contentStrings.get(i).toString().isEmpty()) {
+                    currentSubEntry.setTextConcat((String) contentStrings.get(i));
+                }
             }
-            else if (isItStamp) {
-                currentSubEntry.setTiming((String) contentStrings.get(i));
-//              System.out.println("timing: " + currentSubEntry.timing);
-            }
-            else if (!contentStrings.get(i).toString().isEmpty() && !isItPosition) {
+            else if (currentSubEntry.index != null && currentSubEntry.timing != null && !isItPosition && !isItStamp && !contentStrings.get(i).toString().isEmpty()) {
                 currentSubEntry.setTextConcat((String) contentStrings.get(i));
-//              System.out.println("text: " + currentSubEntry.text);
-
-            } else if (contentStrings.get(i).toString().isEmpty()) {
-                results.add(currentSubEntry);//               System.out.println();
-                System.out.println("OBJECT #" + results.size() + ": " + "\r\n" + currentSubEntry.index + "\r\n" + currentSubEntry.timing + "\r\n" + currentSubEntry.text);
-//              System.out.println();
-                currentSubEntry.text = "";
-                // utolsó elemet nem olvassa be! --> egy if-et írni ami a max. i-nél még objectbe teszi az elemeket? Hack?
-                // end of file felismerni?
-                // lekezelni azt az esetet, h a text részben szám van, amit positionnak érzékelhet a program
+            }
+            else if (currentSubEntry.index != null && currentSubEntry.timing != null && currentSubEntry.text != "") {
+                results.add(currentSubEntry);
+                currentSubEntry = new SubEntry();
             }
         }
+        results.add(currentSubEntry);
         return results;
     }
 }
