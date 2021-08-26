@@ -8,16 +8,16 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Parser {                                                   //feladat: result-ot megtölteni SubEntry-kel
-    public List<SubEntry> readAndParse (String fileLocation) {         // *************
+public class Parser {
+    public List<SubEntry> readAndParse (String fileLocation) {
         String filePath = fileLocation;
         ArrayList originalContentInStrings = new ArrayList();
-        List<SubEntry> result = new ArrayList<SubEntry>();          // *************
+        List<SubEntry> result = new ArrayList<SubEntry>();
 
         originalContentInStrings = readFileAndConvertSRT(filePath);
         result = linesToObjects(originalContentInStrings);
 
-        return result;                                              // *************
+        return result;
     }
 
     public ArrayList readFileAndConvertSRT(String originalFileLocation) {                 // "subs/mysub.srt"
@@ -46,7 +46,6 @@ public class Parser {                                                   //felada
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println(linesInStrings);
         return linesInStrings;
     }
 
