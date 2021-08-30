@@ -12,8 +12,6 @@ public class Main {
        List<SubEntry> subEntries = parser.readAndParse("subs/mysub.srt");
 
        Setter setter = new Setter();
-       setter.modifyTimestampsAndExport(subEntries, 0);
-
+       setter.modifyTimestampsAndExport(subEntries, -3661.1);
     }
 }
-

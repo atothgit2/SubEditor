@@ -48,7 +48,6 @@ public class Parser {
         }
         return linesInStrings;
     }
-
     public List<SubEntry> linesToObjects(ArrayList contentStrings) {
         SubEntry currentSubEntry = new SubEntry();
         List<SubEntry> results = new ArrayList<SubEntry>();

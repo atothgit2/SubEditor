@@ -17,8 +17,6 @@ public class SubEntry {
     }
 
     public void setTextConcat (String textLine) {
-
         this.text = text.concat(textLine + "\r\n");
-
     }
 }
