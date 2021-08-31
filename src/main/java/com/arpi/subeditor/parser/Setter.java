@@ -28,7 +28,7 @@ public class Setter {
 
             entry.timing = adjustedTimingLine;
         }
-        exportFile(gitfinalSubEntriesAsString);
+        exportFile(objectsToString(subEntriesFromParser));
     }
 
     public ArrayList<String> getTimestampsAsStrings(String timestampsWithArrow) {
@@ -47,7 +47,7 @@ public class Setter {
 
     public String adjustTime(String originalTimestamp, double adjustBySecs) {
         String newTimestamp = "";
-        System.out.println(originalTimestamp);
+//        System.out.println(originalTimestamp);
 
         Pattern hoursPattern = Pattern.compile("\\d+(?=:\\d+:)");
         Pattern minutesPattern = Pattern.compile("(?<=:)\\d+(?=:)");
@@ -104,11 +104,23 @@ public class Setter {
 
             newTimestamp = hoursFinal + ":" + minutesFinal + ":" + secondsFinal.replace(".", ",");
 
-            System.out.println(newTimestamp);
-            System.out.println();
+//            System.out.println(newTimestamp);
+//            System.out.println();
 
         }
         return newTimestamp;
+    }
+
+    public String objectsToString (List<SubEntry> updatedSubentries) {
+        String finalStringContent = "";
+
+        for (SubEntry object : updatedSubentries) {
+            finalStringContent = finalStringContent.concat(object.index + "\n");
+            finalStringContent = finalStringContent.concat(object.timing + "\n");
+            finalStringContent = finalStringContent.concat(object.text + "\n");
+        }
+        System.out.println("cx: " + finalStringContent);
+        return finalStringContent;
     }
 
     public void exportFile (String contentToWrite) {

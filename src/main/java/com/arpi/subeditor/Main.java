@@ -9,9 +9,9 @@ public class Main {
 
     public static void main(String[] arg) {
        Parser parser = new Parser();
-       List<SubEntry> subEntries = parser.readAndParse("subs/mysub.srt");
+       List<SubEntry> subEntries = parser.readAndParse("subs/mysub1.srt");
 
        Setter setter = new Setter();
-       setter.modifyTimestampsAndExport(subEntries, -3661.1);
+       setter.modifyTimestampsAndExport(subEntries, 3600);
     }
 }
