@@ -5,6 +5,8 @@ public class SubEntry {
     public String timing;
     public String text = "";
 
+//    refaktorálni, hogy a példány változókat ne lehessen közvetlenül módosítani (private), hanem csak a setter metódusokkal
+
     public SubEntry() {
     }
 

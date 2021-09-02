@@ -18,15 +18,7 @@ public class Parser {
         return result;
     }
 
-    public String storeOriginalFileName (String filePath) {
-        Pattern fileNamePattern = Pattern.compile("(?<=/).+(?=\\.srt)");
-        Matcher fileNameMatcher = fileNamePattern.matcher((String) filePath);
-        fileNameMatcher.find();
-
-        return fileNameMatcher.group();
-    }
-
-    public ArrayList readFileAndConvertSRT(String originalFileLocation) {                 // "subs/mysub.srt"
+    private ArrayList readFileAndConvertSRT(String originalFileLocation) {                 // "subs/mysub.srt"
         String orig = "";
         Path fileName = Path.of(String.valueOf(originalFileLocation));
         ArrayList linesInStrings = new ArrayList();
@@ -55,7 +47,7 @@ public class Parser {
         }
         return linesInStrings;
     }
-    public List<SubEntry> linesToObjects(ArrayList contentStrings) {
+    private List<SubEntry> linesToObjects(ArrayList contentStrings) {
         SubEntry currentSubEntry = new SubEntry();
         List<SubEntry> results = new ArrayList<SubEntry>();
 
