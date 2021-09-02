@@ -13,28 +13,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Setter {
-    public void modifyTimestampsAndExport(List<SubEntry> subEntriesFromParser, double modifierInSecs) {
+    public void modifyTimestampsAndExport(List<SubEntry> subEntriesFromParser, double modifierInSecs, String originalName) {
         for (SubEntry entry : subEntriesFromParser) {
             String timingLine = entry.timing;
-            //System.out.println(entry.timing);
-            String adjustedTimingLine = new String();
-
             ArrayList<String> timestamps = new ArrayList<String>();
             timestamps = getTimestampsAsStrings(timingLine);
             String adjustedTimestamp1 = adjustTime(timestamps.get(0), modifierInSecs);
             String adjustedTimestamp2 = adjustTime(timestamps.get(1), modifierInSecs);
-            
-            adjustedTimingLine = adjustedTimestamp1 + " --> " + adjustedTimestamp2;
 
-            entry.timing = adjustedTimingLine;
+            entry.timing = adjustedTimestamp1 + " --> " + adjustedTimestamp2;
         }
-        exportFile(objectsToString(subEntriesFromParser));
+        exportFile(objectsToString(subEntriesFromParser), originalName);
     }
 
     public ArrayList<String> getTimestampsAsStrings(String timestampsWithArrow) {
         ArrayList<String> timestamps = new ArrayList<String>();
         // get timestamps as strings and put them in array
-        Pattern singleTimestampPattern = Pattern.compile("[0-9][0-9]:[0-9][0-9]:[0-9][0-9],[0-9][0-9][0-9]");
+        Pattern singleTimestampPattern = Pattern.compile("\\d{2}:\\d{2}:\\d{2},\\d{3}");
+        // Pattern singleTimestampPattern = Pattern.compile("[0-9][0-9]:[0-9][0-9]:[0-9][0-9],[0-9][0-9][0-9]");
         Matcher singleTimestampMatcher = singleTimestampPattern.matcher(timestampsWithArrow);
 
         while (singleTimestampMatcher.find()) {
@@ -72,12 +68,7 @@ public class Setter {
 
         /*Replace with proper exception handling*/
         if (timestampSum < 0) {
-            newTimestamp = "00:00:00,000";
-
-            System.out.println(newTimestamp);
-            System.out.println();
-
-            return newTimestamp;
+           return "00:00:00,000";
         } else{
             String hoursFinal = "";
             String minutesFinal = "";
@@ -123,15 +114,14 @@ public class Setter {
         return finalStringContent;
     }
 
-    public void exportFile (String contentToWrite) {
-        String content = contentToWrite;
+    public void exportFile (String contentToWrite, String fileNameOriginal) {
         SimpleDateFormat dateFormatForFilename = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
         Timestamp timestampForFilename = new Timestamp(System.currentTimeMillis());
 
-        Path outputPath = Paths.get("C:\\dev\\JavaTraining\\SubEditor\\outputfiles\\output_" + dateFormatForFilename.format(timestampForFilename) + ".srt");
+        Path outputPath = Paths.get("C:\\dev\\JavaTraining\\SubEditor\\outputfiles\\"+ fileNameOriginal + "_" + dateFormatForFilename.format(timestampForFilename) + ".srt");
 
         try {
-            writeString(outputPath, content, StandardCharsets.UTF_8);
+            writeString(outputPath, contentToWrite, StandardCharsets.UTF_8);
         } catch (IOException ex) {
             ex.printStackTrace();
         }

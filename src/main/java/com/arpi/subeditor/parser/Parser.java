@@ -10,17 +10,24 @@ import java.util.regex.Pattern;
 
 public class Parser {
     public List<SubEntry> readAndParse (String fileLocation) {
-        String filePath = fileLocation;
         ArrayList originalContentInStrings = new ArrayList();
         List<SubEntry> result = new ArrayList<SubEntry>();
-
-        originalContentInStrings = readFileAndConvertSRT(filePath);
+        originalContentInStrings = readFileAndConvertSRT(fileLocation);
         result = linesToObjects(originalContentInStrings);
 
         return result;
     }
 
+    public String storeOriginalFileName (String filePath) {
+        Pattern fileNamePattern = Pattern.compile("(?<=/).+(?=\\.srt)");
+        Matcher fileNameMatcher = fileNamePattern.matcher((String) filePath);
+        fileNameMatcher.find();
+
+        return fileNameMatcher.group();
+    }
+
     public ArrayList readFileAndConvertSRT(String originalFileLocation) {                 // "subs/mysub.srt"
+        String orig = "";
         Path fileName = Path.of(String.valueOf(originalFileLocation));
         ArrayList linesInStrings = new ArrayList();
 
@@ -53,9 +60,7 @@ public class Parser {
         List<SubEntry> results = new ArrayList<SubEntry>();
 
         Pattern positionPattern = Pattern.compile("\\A\\d+$");
-        // ^\b\d+\b$
-        // ^\d+$
-        Pattern timingPattern = Pattern.compile("[0-9][0-9]:[0-9][0-9]:[0-9][0-9],[0-9][0-9][0-9].-->.[0-9][0-9]:[0-9][0-9]:[0-9][0-9],[0-9][0-9][0-9]");
+        Pattern timingPattern = Pattern.compile("\\d{2}:\\d{2}:\\d{2},\\d{3}.-->.\\d{2}:\\d{2}:\\d{2},\\d{3}");
 
         for (int i = 0; i < contentStrings.size(); i++) {
             Matcher timingMatcher = timingPattern.matcher((String) contentStrings.get(i));
