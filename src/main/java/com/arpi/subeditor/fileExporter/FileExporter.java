@@ -10,14 +10,9 @@ import java.text.SimpleDateFormat;
 import static java.nio.file.Files.writeString;
 
 public class FileExporter {
-    public void exportStringToFile (String contentToWrite, String originalFilename) {
-        SimpleDateFormat dateFormatForFilename = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-        Timestamp timestampForFilename = new Timestamp(System.currentTimeMillis());
-
-        Path outputPath = Paths.get("C:\\dev\\JavaTraining\\SubEditor\\outputfiles\\"+ originalFilename + "_" + dateFormatForFilename.format(timestampForFilename) + ".srt");
-
+    public void exportStringToFile (String contentToWrite, Path newFilename) {
         try {
-            writeString(outputPath, contentToWrite, StandardCharsets.UTF_8);
+            writeString(newFilename, contentToWrite, StandardCharsets.UTF_8);
         } catch (IOException ex) {
             ex.printStackTrace();
         }

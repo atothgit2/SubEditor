@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class Parser {
     public List<SubEntry> readAndParse (String fileLocation) {
-        ArrayList originalContentInStrings = new ArrayList();
+        ArrayList<String> originalContentInStrings = new ArrayList();
         List<SubEntry> result = new ArrayList<SubEntry>();
         originalContentInStrings = readFileAndConvertSRT(fileLocation);
         result = linesToObjects(originalContentInStrings);
@@ -18,10 +18,9 @@ public class Parser {
         return result;
     }
 
-    private ArrayList readFileAndConvertSRT(String originalFileLocation) {                 // "subs/mysub.srt"
-        String orig = "";
+    private ArrayList<String> readFileAndConvertSRT(String originalFileLocation) {                 // "subs/mysub.srt"
         Path fileName = Path.of(String.valueOf(originalFileLocation));
-        ArrayList linesInStrings = new ArrayList();
+        ArrayList<String> linesInStrings = new ArrayList<String>();
 
         try {
             String readContent = Files.readString(fileName);
@@ -30,6 +29,9 @@ public class Parser {
             // Remove \ufeff tag from beginning of first string
             // https://stackoverflow.com/questions/3255993/how-do-i-remove-%C3%AF-from-the-beginning-of-a-file
             Pattern ufeffPattern = Pattern.compile("\\ufeff[0-9]+");
+
+            // elég a legelső sort megvizsgálni a readContentsben, nem kell minden soron végig menni
+            // a linesInStrings-be ne rakjuk be az első sort, ha BOM-es element van benne ('for' nem kell)
 
             for (String str : readContents) {
                 Matcher ufeffMatcher = ufeffPattern.matcher((String) str);
@@ -42,12 +44,14 @@ public class Parser {
                    linesInStrings.add(str);
                }
            }
-        } catch (IOException e) {
+        } catch (IOException e) { // file írás vagy olvasás az kötelezően kezelendő, később fixáljuk
             e.printStackTrace();
         }
         return linesInStrings;
     }
-    private List<SubEntry> linesToObjects(ArrayList contentStrings) {
+
+    // erre unit teszteket csinálni később
+    public List<SubEntry> linesToObjects(ArrayList<String> contentStrings) {
         SubEntry currentSubEntry = new SubEntry();
         List<SubEntry> results = new ArrayList<SubEntry>();
 
