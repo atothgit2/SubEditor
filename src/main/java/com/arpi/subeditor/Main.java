@@ -24,7 +24,7 @@ public class Main {
 
         // Modify timestamps
         TimingModifierService timingModifierService = new TimingModifierService();
-        List<SubEntry> modifiedSubentries = timingModifierService.modifySubentriesTiming(subEntries, 3600, originalFileName);
+        List<SubEntry> modifiedSubentries = timingModifierService.modifySubentriesTiming(subEntries, 3661);
 
         // Modified timestamps go to new string
         StringSerializer stringSerializer = new StringSerializer();

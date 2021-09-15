@@ -12,7 +12,6 @@ public class StringSerializer {
             finalStringContent = finalStringContent.concat(object.timing + "\n");
             finalStringContent = finalStringContent.concat(object.text + "\n");
         }
-        System.out.println("cx: " + finalStringContent);
         return finalStringContent;
     }
 }

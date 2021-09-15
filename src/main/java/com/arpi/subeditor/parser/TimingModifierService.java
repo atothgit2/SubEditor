@@ -6,7 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TimingModifierService {
-    public List<SubEntry> modifySubentriesTiming(List<SubEntry> subEntriesFromParser, double modifierInSecs, String originalName) {
+    public List<SubEntry> modifySubentriesTiming(List<SubEntry> subEntriesFromParser, double modifierInSecs) {
+        // create Pairs f
         for (SubEntry entry : subEntriesFromParser) {
             String timingLine = entry.timing;
             Pair<String> timestamps = new Pair<String>();
@@ -29,13 +30,11 @@ public class TimingModifierService {
         timestamps.setFirst(singleTimestampMatcher.group(1));
         timestamps.setSecond(singleTimestampMatcher.group(2));
 
-        //System.out.println(timestamps);
         return timestamps;
     }
 
     private String adjustTime(String originalTimestamp, double adjustBySecs) {
         String newTimestamp = "";
-//        System.out.println(originalTimestamp);
 
         Pattern hoursPattern = Pattern.compile("\\d+(?=:\\d+:)");
         Pattern minutesPattern = Pattern.compile("(?<=:)\\d+(?=:)");
@@ -58,7 +57,7 @@ public class TimingModifierService {
         double minute = Math.floor((timestampSum - (hour * 3600)) / 60);
         double second = timestampSum - (hour * 3600 + minute * 60);
 
-        /*Replace with proper exception handling*/
+        /* Replace with proper exception handling */
         if (timestampSum < 0) {
            return "00:00:00,000";
         } else{
@@ -86,9 +85,6 @@ public class TimingModifierService {
             }
 
             newTimestamp = hoursFinal + ":" + minutesFinal + ":" + secondsFinal.replace(".", ",");
-
-//            System.out.println(newTimestamp);
-//            System.out.println();
 
         }
         return newTimestamp;

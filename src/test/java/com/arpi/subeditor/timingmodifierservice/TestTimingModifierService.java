@@ -22,7 +22,7 @@ public class TestTimingModifierService {
         double addTimeInSecs = 3661;
 
         TimingModifierService timingModifierService = new TimingModifierService();
-        List<SubEntry> results = timingModifierService.modifySubEntriesTiming(subEntries, addTimeInSecs);
+        List<SubEntry> results = timingModifierService.modifySubentriesTiming(subEntries, addTimeInSecs);
 
         Assert.assertEquals(1, subEntries.size());
         Assert.assertEquals("4", results.get(0).index);
