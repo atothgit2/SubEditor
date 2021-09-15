@@ -8,9 +8,9 @@ public class StringSerializer {
         String finalStringContent = "";
 
         for (SubEntry object : updatedSubentries) {
-            finalStringContent = finalStringContent.concat(object.index + "\n");
-            finalStringContent = finalStringContent.concat(object.timing + "\n");
-            finalStringContent = finalStringContent.concat(object.text + "\n");
+            finalStringContent = finalStringContent.concat(object.getIndex() + "\n");
+            finalStringContent = finalStringContent.concat(object.getTiming() + "\n");
+            finalStringContent = finalStringContent.concat(object.getText() + "\n");
         }
         return finalStringContent;
     }

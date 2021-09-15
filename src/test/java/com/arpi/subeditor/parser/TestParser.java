@@ -23,9 +23,9 @@ public class TestParser {
 
         SubEntry subEntry = results.get(0);
 
-        Assert.assertEquals("4", subEntry.index);
-        Assert.assertEquals("00:00:27,861 --> 00:00:31,657", subEntry.timing);
-        Assert.assertEquals("- Ahogy nálunk szokás." + "\r\n" + "- Őrültek vagytok." + "\r\n", subEntry.text);
+        Assert.assertEquals("4", subEntry.getIndex());
+        Assert.assertEquals("00:00:27,861 --> 00:00:31,657", subEntry.getTiming());
+        Assert.assertEquals("- Ahogy nálunk szokás." + "\r\n" + "- Őrültek vagytok." + "\r\n", subEntry.getText());
     }
 
 }

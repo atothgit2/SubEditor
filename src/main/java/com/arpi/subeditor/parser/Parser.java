@@ -65,7 +65,7 @@ public class Parser {
             boolean isItPosition = positionMatcher.matches();
             boolean isItStamp = timingMatcher.matches();
 
-            if (currentSubEntry.index == null || currentSubEntry.timing == null || currentSubEntry.text == "") {
+            if (currentSubEntry.getIndex() == null || currentSubEntry.getTiming() == null || currentSubEntry.getText() == "") {
                 if (isItPosition) {
                     currentSubEntry.setIndex((String) contentStrings.get(i));
                 } else if (isItStamp) {
@@ -74,10 +74,10 @@ public class Parser {
                     currentSubEntry.setTextConcat((String) contentStrings.get(i));
                 }
             }
-            else if (currentSubEntry.index != null && currentSubEntry.timing != null && !isItPosition && !isItStamp && !contentStrings.get(i).toString().isEmpty()) {
+            else if (currentSubEntry.getIndex() != null && currentSubEntry.getTiming() != null && !isItPosition && !isItStamp && !contentStrings.get(i).toString().isEmpty()) {
                 currentSubEntry.setTextConcat((String) contentStrings.get(i));
             }
-            else if (currentSubEntry.index != null && currentSubEntry.timing != null && currentSubEntry.text != "") {
+            else if (currentSubEntry.getIndex() != null && currentSubEntry.getTiming() != null && currentSubEntry.getText() != "") {
                 results.add(currentSubEntry);
                 currentSubEntry = new SubEntry();
             }
