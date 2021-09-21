@@ -10,7 +10,7 @@ import java.util.List;
 public class TestParser {
     @Test
     public void shouldParseLines() {
-        ArrayList<String> lines = new ArrayList<String>();
+        ArrayList<String> lines = new ArrayList<String>();0
         lines.add("4");
         lines.add("00:00:27,861 --> 00:00:31,657");
         lines.add("- Ahogy nálunk szokás.");
@@ -27,6 +27,4 @@ public class TestParser {
         Assert.assertEquals("00:00:27,861 --> 00:00:31,657", subEntry.getTiming());
         Assert.assertEquals("- Ahogy nálunk szokás." + "\r\n" + "- Őrültek vagytok." + "\r\n", subEntry.getText());
     }
-
 }
-    /// HF: új fájlba a timing modifier service-hez tesztet írni

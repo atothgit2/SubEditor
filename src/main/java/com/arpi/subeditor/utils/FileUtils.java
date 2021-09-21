@@ -66,7 +66,7 @@ public class FileUtils {        // Utility class, nem kötődik példányhoz, in
         /* Replace with proper exception handling */
         if (timestampSum < 0) {
             return "00:00:00,000";
-        } else{
+        } else {
             String hoursFinal = "";
             String minutesFinal = "";
             String secondsFinal = "";

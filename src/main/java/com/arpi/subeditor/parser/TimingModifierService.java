@@ -15,12 +15,10 @@ public class TimingModifierService {
 
             entry.setTiming(adjustedTimestamp1 + " --> " + adjustedTimestamp2);
 
-            System.out.println(entry.getIndex() + " (Original)");
-            System.out.println(entry.getTiming());
-            System.out.println(entry.getText());
+//            System.out.println(entry.getIndex() + " (Original)");
+//            System.out.println(entry.getTiming());
+//            System.out.println(entry.getText());
         }
-
-
         return subEntriesFromParser;
     }
 }

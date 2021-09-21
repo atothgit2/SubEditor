@@ -10,10 +10,8 @@ import java.util.regex.Pattern;
 
 public class Parser {
     public List<SubEntry> readAndParse (String fileLocation) {
-        ArrayList<String> originalContentInStrings = new ArrayList();
-        List<SubEntry> result = new ArrayList<SubEntry>();
-        originalContentInStrings = readFileAndConvertSRT(fileLocation);
-        result = linesToObjects(originalContentInStrings);
+        ArrayList<String> originalContentInStrings = readFileAndConvertSRT(fileLocation);
+        List<SubEntry> result = linesToObjects(originalContentInStrings);
 
         return result;
     }

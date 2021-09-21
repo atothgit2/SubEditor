@@ -2,6 +2,7 @@ package com.arpi.subeditor.timingmodifierservice;
 
 import com.arpi.subeditor.parser.SubEntry;
 import com.arpi.subeditor.parser.TimingModifierService;
+import com.arpi.subeditor.utils.FileUtils;
 import org.junit.Assert;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -25,8 +26,8 @@ public class TestTimingModifierService {
         List<SubEntry> results = timingModifierService.modifySubentriesTiming(subEntries, addTimeInSecs);
 
         Assert.assertEquals(1, subEntries.size());
-        Assert.assertEquals("4", results.get(0).index);
-        Assert.assertEquals("01:01:28,860 --> 01:01:32,657", results.get(0).timing);
-        Assert.assertEquals("- Ahogy nálunk szokás." + "\r\n" + "- Őrültek vagytok." + "\r\n", results.get(0).text);
+        Assert.assertEquals("4", results.get(0).getIndex());
+        Assert.assertEquals("01:01:28,860 --> 01:01:32,657", results.get(0).getTiming());
+        Assert.assertEquals("- Ahogy nálunk szokás." + "\r\n" + "- Őrültek vagytok." + "\r\n", results.get(0).getText());
         }
     }
